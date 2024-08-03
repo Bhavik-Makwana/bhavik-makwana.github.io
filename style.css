@@ -70,10 +70,11 @@ body {
 .flex-table {
     padding: 30px;
     background: #07880b;
-    flex-grow: 3;
+    flex-grow: 5;
     align-items: stretch;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
     overflow-y: scroll;
+    
   }
   
   table {
