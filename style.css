@@ -1,0 +1,110 @@
+
+@keyframes gradient-animation {
+    0% {
+        /* background: linear-gradient(45deg, hsl(282, 100%, 50%), #76e0f8); */
+        background-position: 0% 50%;
+
+    }
+    50% {
+		background-position: 100% 50%;
+	}
+    100% {
+        /* background: linear-gradient(45deg, #76e0f8, hsl(282, 100%, 50%)); */
+        background-position: 0% 50%;
+    }
+  }
+
+  
+html {
+    height: 100%;
+}
+body {
+    background: linear-gradient(45deg, hsl(282, 100%, 50%), #76e0f8);
+    animation: gradient-animation 10s ease infinite;
+    background-size: 400% 400%;
+
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+body {
+    /* background: linear-gradient(#111827, #202331); */
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #333;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 16px 8px 16px 8px;
+    border: 1px solid #333;
+  }
+  
+  tr:nth-child(even) {
+    background-color: rgb(54, 164, 67);
+  }
+
+  .press-start-2p-regular {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .container {
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    height: 80%;
+}
+
+.flex-empty {
+    flex-grow: 1;
+}
+
+.flex-table {
+    padding: 30px;
+    background: #07880b;
+    flex-grow: 3;
+    align-items: stretch;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    overflow: scroll;
+  }
+  
+  table {
+    width: 100%;
+    
+  }
+  
+  .header {
+    margin: 20px;
+    font-size: 2em;
+    display: flex;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
+    justify-content: center;
+    background-color: rgb(48 143 59);
+    padding: 20px;
+    margin: 0px 0px 20px 0px;
+    gap: 50px;
+  }
+
+  .pepe  {
+    border-radius: 50%; /* Makes the image circular */
+    width: 100%; 
+    height: 100%; /* Adjust the height to match the width */
+    box-shadow: 2px 2px 4px rgba(22, 20, 20, 0.5); /* Adds a subtle shadow */
+  }
+  
+  #flex-icon {
+    flex: 10%;
+    justify-content: center;
+    align-items: center;
+  }
+  #flex-title {
+    flex: 90%;
+  }
