@@ -17,14 +17,15 @@
   
 html {
     height: 100%;
+    background: linear-gradient(45deg, hsl(282, 100%, 50%), #76e0f8);
+    animation: gradient-animation 10s ease infinite;
+    background-size: 400% 400%;
 }
  
 
 body {
     margin-top: 0;
-    background: linear-gradient(45deg, hsl(282, 100%, 50%), #76e0f8);
-    animation: gradient-animation 10s ease infinite;
-    background-size: 400% 400%;
+    
 
     height: 100%;
     margin: 0;
@@ -134,7 +135,7 @@ input[type="submit"] {
     display: flex;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
     justify-content: center;
-    background-color: rgb(48 143 59);
+    background-color: #308f3b;
     padding: 20px;
     margin: 0px 0px 20px 0px;
     gap: 50px;
@@ -154,4 +155,8 @@ input[type="submit"] {
   }
   #flex-title {
     flex: 90%;
+  }
+  #trophy-icon {
+    height: 70%;
+    width: 70%;
   }
