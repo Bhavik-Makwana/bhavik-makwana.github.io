@@ -18,7 +18,10 @@
 html {
     height: 100%;
 }
+ 
+
 body {
+    margin-top: 0;
     background: linear-gradient(45deg, hsl(282, 100%, 50%), #76e0f8);
     animation: gradient-animation 10s ease infinite;
     background-size: 400% 400%;
@@ -125,6 +128,7 @@ input[type="submit"] {
 
   
   .header {
+    margin-top: 0;
     margin: 20px;
     font-size: 2em;
     display: flex;
