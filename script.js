@@ -80,7 +80,7 @@ $(document).ready(function () {
     function addRow(address, sol) {
         const idx = $('#wallet-table').find('tr').length;
         const nickname = '';
-        const row = $('<tr><td>' + idx + '</td><td contenteditable=true class="nickname"  id="'+address+'"></td><td>' + address + '</td><td>' + sol + '</td></tr>');
+        const row = $('<tr><td>' + idx + '</td><td contenteditable=true class="nickname"  id="'+address+'"></td><td>' + sol + '</td><td>' + address + '</td></tr>');
         $('#wallet-table').append(row);
     }
 
@@ -99,7 +99,7 @@ $(document).ready(function () {
                 const sol = balance.sol;
                 const nickname = localStorage.getItem(balance.wallet) === null ? '': localStorage.getItem(balance.wallet);
                 console.log(nickname);
-                const row = $('<tr><td>' + (currLength + idx) + '</td><td contenteditable=true class="nickname" id="'+balance.wallet+'">'+ nickname +'</td><td>' + balance.wallet + '</td><td>' + sol + '</td></tr>');
+                const row = $('<tr><td>' + (currLength + idx) + '</td><td contenteditable=true class="nickname" id="'+balance.wallet+'">'+ nickname +'</td><td>' + sol + '</td><td>' + balance.wallet + '</td></tr>');
                 $('#wallet-table').append(row);
             });
 
