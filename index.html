@@ -25,35 +25,39 @@
         </div>
 
     </section>
-    
-    <div class="flex-table">
-        <form id="myForm">
-            <label>Wallet Address:</label> <input type="text" id="name" name="name"><br><br>
-            <input type="submit" value="Submit">
-
-        </form>
+    <div class="container-form">
+        <div class="flex-empty"></div>
+        <div class="flex-form">
+            <form id="myForm">
+                <label>Wallet Address:</label> <input type="text" id="name" name="name">
+                <input type="submit" value="Submit">
+                <p id="wallet-error"> </p>
+            </form>
+        </div>
+        <div class="flex-empty"></div>
     </div>
     <div class="container">
         <div class="flex-empty"></div>
         <div class="flex-table">
-            <h2>Leaderboard</h2>
+            <h2>August Leaderboard</h2>
             <table id="wallet-table">
                 <thead>
                     <tr>
                         <th>Rank</th>
+                        <th>Nickname</th>
                         <th>Wallet</th>
                         <th>Sol</th>
                     </tr>
                 </thead>
                 <tbody>
-                  
+
                 </tbody>
             </table>
         </div>
         <div class="flex-empty"></div>
-       
+
     </div>
-   
+
 </body>
 
 </html>

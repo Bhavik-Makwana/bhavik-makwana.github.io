@@ -55,7 +55,42 @@ body {
     font-weight: 400;
     font-style: normal;
   }
-  
+  input[type="text"] {
+  font-family: "Press Start 2P";
+  font-size: 15px;
+  color: #333;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  padding: 5px;
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+input[type="submit"] {
+    font-family: "Press Start 2P";
+    font-size: 15px;
+    color: white;
+    background-color: #054800;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  input[type="submit"]:hover {
+    background-color: #4dbe45;
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  input[type="submit"]:active {
+    background-color: #7ee077;
+    box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.3);
+  }
+#wallet-error {
+    color: red;
+    background-color: white;
+    display: inline-block;
+    
+}
   .container {
     margin: 0 auto;
     padding: 20px;
@@ -63,24 +98,31 @@ body {
     height: 80%;
 }
 
+.container-form {
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+}
 .flex-empty {
     flex-grow: 1;
 }
 
-.flex-table {
+.flex-form, .flex-table {
     padding: 30px;
     background: #07880b;
     flex-grow: 5;
     align-items: stretch;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    
+    
+  }
+  .flex-table {
+    
     overflow-y: scroll;
     
   }
   
-  table {
-    width: 100%;
-    
-  }
+
   
   .header {
     margin: 20px;

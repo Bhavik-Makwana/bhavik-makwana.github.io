@@ -6,10 +6,29 @@ $(document).ready(function () {
         inputValues = JSON.parse(localStorage.getItem("wallet_addresses"));
     }
 
+    
+    // $('.nickname').on('input', function() {
+    //     console.log('edt');
+    //     localStorage.setItem('nickname', $(this).html());
+    //   });
+    
+    $('body').on('focus', '[contenteditable]', function() {
+        const $this = $(this);
+        $this.data('before', $this.html());
+    }).on('blur keyup paste input', '[contenteditable]', function() {
+        const $this = $(this);
+
+        if ($this.data('before') !== $this.html()) {
+            $this.data('before', $this.html());
+            $this.trigger('change');
+            localStorage.setItem($this.attr("id"), $this.html());
+        }
+    });
 
     $('#myForm').submit(function (event) {
         event.preventDefault(); // Prevent default form submission
         const inputValue = $('#myForm input[type="text"]').val();
+        $('#wallet-error').text();
         const jsonData = {
             jsonrpc: "2.0",
             id: 1,
@@ -29,13 +48,16 @@ $(document).ready(function () {
             data: JSON.stringify(jsonData),
             success: function (data, status) {
                 console.log(status);
-                console.log(data);
-                if (data.error !== null) {
-                    return;
-                } else {
+                console.log(data.error);
+                if (data.error === undefined ) {
                     sol = data.result.value;
-
-                    result(data.result.value);
+                    
+                    result(sol);
+                    
+                } else {
+                    $('#myForm input[type="text"]').val('');
+                    $('#wallet-error').text("Please enter a valid wallet address");
+                    return;
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -45,6 +67,10 @@ $(document).ready(function () {
 
         function result(r) {
             sol = r / 1000000000;
+            if (inputValues.some(item => item.wallet === inputValue)) {
+                $('#wallet-error').text("Wallet already added");
+                return;
+            }
             inputValues.push({ wallet: inputValue });
             inputValues.forEach(e => {
                 console.log(e);
@@ -59,7 +85,8 @@ $(document).ready(function () {
     });
     function addRow(address, sol) {
         const idx = $('#wallet-table').find('tr').length;
-        const row = $('<tr><td>' + idx + '</td><td>' + address + '</td><td>' + sol + '</td></tr>');
+        const nickname = '';
+        const row = $('<tr><td>' + idx + '</td><td contenteditable=true class="nickname"  id="'+address+'"></td><td>' + address + '</td><td>' + sol + '</td></tr>');
         $('#wallet-table').append(row);
     }
 
@@ -73,10 +100,12 @@ $(document).ready(function () {
 
             const currLength = $('#wallet-table').find('tr').length;
             const balances = await Promise.all(inputValues.map(address => transformAddress(address.wallet)));
-            console.log(balances);
-            balances.forEach((balance, idx) => {
+            const orderedBalances = balances.sort((a,b) => b.sol - a.sol);
+            orderedBalances.forEach((balance, idx) => {
                 const sol = balance.sol;
-                const row = $('<tr><td>' + (currLength + idx) + '</td><td>' + balance.wallet + '</td><td>' + balance.sol + '</td></tr>');
+                const nickname = localStorage.getItem(balance.wallet) === null ? '': localStorage.getItem(balance.wallet);
+                console.log(nickname);
+                const row = $('<tr><td>' + (currLength + idx) + '</td><td contenteditable=true class="nickname" id="'+balance.wallet+'">'+ nickname +'</td><td>' + balance.wallet + '</td><td>' + sol + '</td></tr>');
                 $('#wallet-table').append(row);
             });
 
@@ -110,3 +139,4 @@ $(document).ready(function () {
     }
     updateTable();
 });
+
