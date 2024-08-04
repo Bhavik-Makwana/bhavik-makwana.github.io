@@ -18,19 +18,25 @@ $(document).ready(function () {
         };
         console.log(JSON.stringify(jsonData));
         var sol;
-
+        // https://docs-demo.solana-mainnet.quiknode.pro/
+        // https://api.devnet.solana.com
+        // https://api.mainnet-beta.solana.com
         $.ajax({
             type: "POST",
-            url: "https://api.devnet.solana.com",
+            url: "https://docs-demo.solana-mainnet.quiknode.pro/",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(jsonData),
             success: function (data, status) {
-                // alert("Data: " + data + "\nStatus: " + status);
                 console.log(status);
                 console.log(data);
-                sol = data.result.value;
-                result(data.result.value);
+                if (data.error !== null) {
+                    return;
+                } else {
+                    sol = data.result.value;
+
+                    result(data.result.value);
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -39,7 +45,7 @@ $(document).ready(function () {
 
         function result(r) {
             sol = r / 1000000000;
-            inputValues.push({wallet: inputValue, sol: sol});
+            inputValues.push({ wallet: inputValue });
             inputValues.forEach(e => {
                 console.log(e);
             });
@@ -56,21 +62,51 @@ $(document).ready(function () {
         const row = $('<tr><td>' + idx + '</td><td>' + address + '</td><td>' + sol + '</td></tr>');
         $('#wallet-table').append(row);
     }
-    function updateTable() {
+
+
+    async function updateTable() {
+        async function transformAddress(wallet) {
+            const sol = await getSolBalance(wallet);
+            return { wallet: wallet, sol: sol };
+        }
         if (inputValues && inputValues.length > 0) {
 
             const currLength = $('#wallet-table').find('tr').length;
-            inputValues.forEach((address, idx) => {
-                let wallet = address.wallet;
-                let sol = address.sol;
-                const row = $('<tr><td>' + (currLength + idx) + '</td><td>' + wallet + '</td><td>'+sol+ '</td></tr>');
+            const balances = await Promise.all(inputValues.map(address => transformAddress(address.wallet)));
+            console.log(balances);
+            balances.forEach((balance, idx) => {
+                const sol = balance.sol;
+                const row = $('<tr><td>' + (currLength + idx) + '</td><td>' + balance.wallet + '</td><td>' + balance.sol + '</td></tr>');
                 $('#wallet-table').append(row);
             });
 
+
         }
+    }
+
+    function getSolBalance(wallet) {
+        const jsonData = {
+            jsonrpc: "2.0",
+            id: 1,
+            method: "getBalance",
+            params: [wallet],
+        };
+
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "POST",
+                url: "https://docs-demo.solana-mainnet.quiknode.pro/",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(jsonData),
+                success: function (data, status) {
+                    resolve(data.result.value / 1000000000);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    reject(errorThrown);
+                }
+            });
+        });
     }
     updateTable();
 });
-
-    //  844SVH8KVDSbAgJXXMAZdbUKrYDowfSyE6E66LRENTmU
-    //  HYAp4BRD9hxcALfX7XS3rAKDDCcDJiAyTtGWkbaZRGKL
