@@ -1,6 +1,3 @@
-body {
-    font-family: "Georgia", serif;
-}
 
 .canvas-container {
     margin: 2rem 0;
@@ -52,8 +49,12 @@ body {
     font-size: 1rem;
     color: #666;
     font-style: italic;
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
   }
-
+  
   .post-gifs {
     margin: 2rem 0;
   }
@@ -62,3 +63,12 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
+
+  .post-content code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+  
