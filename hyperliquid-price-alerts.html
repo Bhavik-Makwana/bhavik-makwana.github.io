@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Hyperliquid Price Alerts Bot | Real-time Crypto Price Monitoring</title>
+    <meta name="title" content="Hyperliquid Price Alerts Bot | Real-time Crypto Price Monitoring" />
+    <meta name="description" content="A Telegram bot that monitors cryptocurrency prices on the Hyperliquid exchange and sends real-time price alerts. Built with Rust and featuring WebSocket integration, SQLite storage, and cron scheduling." />
+    <meta name="keywords" content="hyperliquid, price alerts, telegram bot, cryptocurrency, rust, websocket, real-time monitoring, crypto trading" />
+    <meta name="author" content="Bhavik Makwana" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bhavik-makwana.github.io/hyperliquid-price-alerts.html" />
+    <meta property="og:title" content="Hyperliquid Price Alerts Bot" />
+    <meta property="og:description" content="A Telegram bot that monitors cryptocurrency prices on the Hyperliquid exchange and sends real-time price alerts." />
+    <meta property="og:image" content="https://bhavik-makwana.github.io/assets/hyperliquid-alerts-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Bhavik Makwana's Projects" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://bhavik-makwana.github.io/hyperliquid-price-alerts.html" />
+    <meta property="twitter:title" content="Hyperliquid Price Alerts Bot" />
+    <meta property="twitter:description" content="A Telegram bot that monitors cryptocurrency prices on the Hyperliquid exchange and sends real-time price alerts." />
+    <meta property="twitter:image" content="https://bhavik-makwana.github.io/assets/hyperliquid-alerts-preview.png" />
+    <meta property="twitter:creator" content="@bhavbhav__" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#2c2c2c" />
+    <meta name="msapplication-TileColor" content="#2c2c2c" />
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://bhavik-makwana.github.io/hyperliquid-price-alerts.html" />
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Hyperliquid Price Alerts Bot",
+      "description": "A Telegram bot that monitors cryptocurrency prices on the Hyperliquid exchange and sends real-time price alerts.",
+      "url": "https://bhavik-makwana.github.io/hyperliquid-price-alerts.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Cross-platform",
+      "programmingLanguage": "Rust",
+      "author": {
+        "@type": "Person",
+        "name": "Bhavik Makwana",
+        "url": "https://bhavik-makwana.github.io"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <div class="nav-brand">
+          <h1><a href="index.html" style="text-decoration: none; color: inherit;">Bhavs Blog</a></h1>
+        </div>
+        <div class="nav-menu">
+          <ul class="nav-links" id="navLinks">
+            <li>
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li>
+              <a href="27signatures.html" class="nav-link">27Signatures</a>
+            </li>
+            <li>
+              <a href="hyperliquid-price-alerts.html" class="nav-link active">Hyperliquid Price Alerts</a>
+            </li>
+            <li>
+              <a href="" class="nav-link">(TODO) Partyboard</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <section class="blog-post">
+      <div class="container">
+        <article class="post">
+          <h2 class="post-title">Hyperliquid Price Alerts Bot</h2>
+          <div class="post-meta">
+            <span class="post-author">By Bhavik Makwana</span>
+            <br />
+            <span class="post-date">Created: September 2025</span>
+          </div>
+          <div class="post-contents">
+            <ul>
+              <li>
+                <a href="#part1">Project Overview</a>
+              </li>
+              <li>
+                <a href="#part2">Key Features</a>
+              </li>
+              <li>
+                <a href="#part3">System Architecture</a>
+              </li>
+              <li>
+                <a href="#part4">How It Works</a>
+              </li>
+              <li>
+                <a href="#part6">Future Plans</a>
+              </li>
+            </ul>
+          </div>
+          <div class="post-content">
+            <h3 id="part1">Project Overview</h3>
+            <p>
+              As I got more involved in the crypto space, I found myself regularly checking the price of various tokens I owned
+              every day I woke up and honestly too frequently throughout the day to check the current price. The main hyperliquid
+              UI doesn't provide support for price alerts and since this was the only extra feature I wanted, I didn't want to switch
+              to a different UI. I wanted this to serve two purposes, give me a notification when a price I care about reaches a certain level
+              and to schedule daily notifications at a certain time (i.e. when I wake up).
+              
+              I worked on a similar feature during my time at Wise, although their platform was already built out and all I was doing was making
+              it more stable and provide real-time ingestion. The simplest way to get this up and running was to build a Telegram bot which gets
+              price data from the Hyperliquid API. I'm hoping this will let me sleep better at night.
+            </p>
+            <p>
+              This was a fun project involving real-time WebSocket data streaming, persistent storage, 
+              and building a cooldown system that prevents spam while ensuring users never miss important price movements. I don't expect this to
+              have a large user base so I ended up using SQLite for storage but still tried to take performance into consideration.
+            </p>
+
+            <h3 id="part2">Key Features</h3>
+            <ul>
+              <li><strong>Real-time Price Monitoring:</strong> Continuously monitors cryptocurrency prices using Hyperliquid's WebSocket API for instant updates.</li>
+              <li><strong>Telegram Integration:</strong> Sends instant notifications via Telegram when price targets are hit with customizable messages.</li>
+              <li><strong>Persistent Storage:</strong> SQLite database to store user alerts, settings, and historical data with reliable persistence.</li>
+              <li><strong>Cooldown System:</strong> Prevents spam by implementing intelligent cooldown periods for triggered alerts.</li>
+              <li><strong>Multi-token Support:</strong> Monitor multiple cryptocurrencies simultaneously with support for all SPOT tokens on Hyperliquid.</li>
+              <li><strong>Cron Alerts:</strong> Schedule daily alerts that fire at specific times (e.g., 8am daily) with custom messages.</li>
+            </ul>
+
+            <h3 id="part3">System Architecture</h3>
+            <p>
+              The application consists of several key components working together to provide reliable price monitoring:
+            </p>
+            <ul>
+              <li><strong>AlertService</strong> - Manages alert creation, retrieval, and triggering logic</li>
+              <li><strong>CronService</strong> - Handles scheduled alerts and cron job management</li>
+              <li><strong>NotificationService</strong> - Handles Telegram bot commands and message sending</li>
+              <li><strong>Database</strong> - SQLite-based storage for alerts, cron alerts, and user data</li>
+              <li><strong>WebSocket Client</strong> - Real-time price monitoring via Hyperliquid API</li>
+              <li><strong>Cron Worker</strong> - Background task that triggers scheduled alerts at specified times</li>
+            </ul>
+ 
+            <h3 id="part4">How It Works</h3>
+            <p>
+              The bot operates through a simple yet effective workflow:
+            </p>
+            <p>
+              <strong>1. Create an Alert:</strong> Users use the <code>/setalert</code> command to set a target price for any supported cryptocurrency on Hyperliquid.
+            </p>
+            <p>
+              <strong>2. Real-time Monitoring:</strong> The bot continuously monitors prices via WebSocket connections to Hyperliquid's API for instant updates.
+            </p>
+            <p>
+              <strong>3. Alert Triggering:</strong> When the current price reaches your target (within 0.1% tolerance), you'll receive a notification instantly.
+            </p>
+            <p>
+              <strong>4. Cooldown & Reset:</strong> After triggering, alerts enter a 1-minute cooldown to prevent spam, then automatically reset for future triggers.
+            </p>
+
+            <h4>Telegram Commands</h4>
+            <p>
+              The bot supports several commands for managing alerts:
+            </p>
+            <ul>
+              <li><code>/help</code> - Display available commands</li>
+              <li><code>/alert</code> - View all your current price alerts</li>
+              <li><code>/setalert &lt;coin&gt; &lt;price&gt;</code> - Create a new price alert (e.g., <code>/setalert HYPE 100.0</code>)</li>
+              <li><code>/cronalerts</code> - View all your scheduled cron alerts</li>
+              <li><code>/setcronalert &lt;message&gt;</code> - Create a daily cron alert at 8am</li>
+              <li><code>/deletecronalert &lt;id&gt;</code> - Delete a cron alert by ID</li>
+            </ul>
+
+            <h3 id="part6">Future Plans</h3>
+            <p>
+              The project roadmap includes several exciting enhancements:
+            </p>
+            <ul>
+              <li><strong>Smart Alerts:</strong> Auto-generate alerts based on user's perpetual positions, including liquidation warnings and stop-loss/take-profit levels.</li>
+              <li><strong>Advanced Scheduling:</strong> Support for hourly, weekly, and custom cron schedules beyond daily alerts.</li>
+              <li><strong>Performance Metrics:</strong> Detailed analytics and performance tracking for alert accuracy and response times.</li>
+              <li><strong>Message Queue:</strong> Implement a message queue system for better scalability and reliability at higher volumes.</li>
+              <li><strong>Alert tied to alarm:</strong> Send a notification when my phones alarm goes off or I turn it on.</li>
+              <li><strong>Auto expire alerts:</strong> Let users choose to auto expire alerts after a certain number of days or after it fires.</li>
+            </ul>
+            <p>
+              The project is open source and available on <a href="https://github.com/bhavik-makwana/hl-price-alerts" target="_blank">GitHub</a>. 
+              Feel free to explore the code, contribute, or use it as a reference for your own projects.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="social-links">
+          &copy; 2025 Bhavik Makwana.
+          <a href="https://github.com/bhavik-makwana" class="social-link"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/in/bhavik-m-536442161/"
+            class="social-link"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="https://www.tiktok.com/@bhavbhav__" class="social-link"
+            ><i class="fab fa-tiktok"></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  </body>
+</html>
