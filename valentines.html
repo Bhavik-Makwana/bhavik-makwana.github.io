@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>A Special Question...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #ffb6b9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden;
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hearts-bg span {
+            position: absolute;
+            top: -50px;
+            animation: floatDown linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatDown {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 1;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .card h1 {
+            font-size: 2.8rem;
+            color: #c0392b;
+            margin-bottom: 10px;
+        }
+
+        .card .question {
+            font-size: 2rem;
+            color: #e74c3c;
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.6rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(238, 90, 36, 0.6);
+        }
+
+        .btn-no {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.6rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        .btn-no:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-no.dodging {
+            position: fixed;
+            transition: none;
+        }
+
+        /* Celebration */
+        #celebration {
+            display: none;
+        }
+
+        #celebration.show {
+            display: block;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #celebration h1 {
+            font-size: 2.5rem;
+            color: #c0392b;
+            margin-bottom: 15px;
+        }
+
+        #celebration p {
+            font-size: 1.5rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        #celebration img {
+            max-width: 300px;
+            width: 80%;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            z-index: 100;
+            animation: confettiFall linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .usagi-huh {
+            position: fixed;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            z-index: 50;
+            transition: bottom 0.3s ease-out;
+            pointer-events: none;
+        }
+
+        .usagi-huh.visible {
+            bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 35px 25px;
+            }
+
+            .card h1 {
+                font-size: 2rem;
+            }
+
+            .card .question {
+                font-size: 1.5rem;
+                margin-bottom: 30px;
+            }
+
+            .btn-yes, .btn-no {
+                padding: 12px 35px;
+                font-size: 1.3rem;
+            }
+
+            #celebration h1 {
+                font-size: 1.8rem;
+            }
+
+            #celebration p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-bg" id="heartsBg"></div>
+    <img src="assets/usagi-huh.gif" alt="Usagi huh" id="usagiHuh" class="usagi-huh">
+
+    <div class="card" id="questionCard">
+        <h1>Dear Gina... 💕</h1>
+        <p class="question">Will you be my Valentine?</p>
+        <div class="buttons">
+            <button class="btn-yes" id="btnYes">Yes!</button>
+            <button class="btn-no" id="btnNo">No</button>
+        </div>
+    </div>
+
+    <div class="card" id="celebration">
+        <h1>Ye ye! 😎</h1>
+        <p>Lets goooo</p>
+        <img src="assets/cat.gif" alt="Cute celebration cat">
+        <p style="margin-top: 20px;">Happy Valentine's Day! 💝</p>
+    </div>
+
+    <script>
+        // ── Floating Hearts Background ──
+        (function createFloatingHearts() {
+            const container = document.getElementById('heartsBg');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💘', '💝'];
+            for (let i = 0; i < 25; i++) {
+                const span = document.createElement('span');
+                span.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                span.style.left = Math.random() * 100 + '%';
+                span.style.fontSize = (Math.random() * 20 + 14) + 'px';
+                span.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                span.style.animationDelay = (Math.random() * 8) + 's';
+                container.appendChild(span);
+            }
+        })();
+
+        // ── No Button Dodge ──
+        const btnNo = document.getElementById('btnNo');
+        const btnYes = document.getElementById('btnYes');
+        const questionCard = document.getElementById('questionCard');
+        const celebration = document.getElementById('celebration');
+        let isDodging = false;
+
+        function getRandomPosition() {
+            const pad = 20;
+            const bw = btnNo.offsetWidth;
+            const bh = btnNo.offsetHeight;
+            const x = Math.random() * (window.innerWidth - bw - pad * 2) + pad;
+            const y = Math.random() * (window.innerHeight - bh - pad * 2) + pad;
+            return { x, y };
+        }
+
+        const usagiImg = document.getElementById('usagiHuh');
+
+        let usagiTimeout;
+        function playHaa() {
+            const sound = new Audio('assets/haa.mp3');
+            sound.volume = 1.0;
+            sound.play().catch(() => {});
+            usagiImg.classList.add('visible');
+            clearTimeout(usagiTimeout);
+            usagiTimeout = setTimeout(() => usagiImg.classList.remove('visible'), 1500);
+        }
+
+        function dodgeButton() {
+            playHaa();
+            if (!isDodging) {
+                isDodging = true;
+                document.body.appendChild(btnNo);
+                btnNo.classList.add('dodging');
+            }
+            const pos = getRandomPosition();
+            btnNo.style.left = pos.x + 'px';
+            btnNo.style.top = pos.y + 'px';
+        }
+
+        // Desktop: dodge when mouse gets close
+        document.addEventListener('mousemove', function (e) {
+            if (!isDodging && !btnNo.classList.contains('dodging')) {
+                // Check distance only when button is still in card
+            }
+            const rect = btnNo.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+            if (dist < 100) {
+                dodgeButton();
+            }
+        });
+
+        // Mobile: dodge on touch
+        btnNo.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            dodgeButton();
+        }, { passive: false });
+
+        // Safety net: click also dodges
+        btnNo.addEventListener('click', function (e) {
+            e.preventDefault();
+            dodgeButton();
+        });
+
+        // ── Yes Button ──
+        btnYes.addEventListener('click', function () {
+            playPopperSound();
+            questionCard.style.display = 'none';
+            if (isDodging) {
+                btnNo.style.display = 'none';
+            }
+            celebration.classList.add('show');
+            launchConfetti();
+        });
+
+        // ── Party Popper Sound (Web Audio API) ──
+        function playPopperSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+                // White noise burst (the "pop")
+                const bufferSize = ctx.sampleRate * 0.15;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 3);
+                }
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 1500;
+
+                const noiseGain = ctx.createGain();
+                noiseGain.gain.setValueAtTime(0.6, ctx.currentTime);
+                noiseGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+
+                noise.connect(filter);
+                filter.connect(noiseGain);
+                noiseGain.connect(ctx.destination);
+                noise.start();
+
+                // Rising sine tone (sparkle)
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1800, ctx.currentTime + 0.2);
+
+                const oscGain = ctx.createGain();
+                oscGain.gain.setValueAtTime(0.3, ctx.currentTime);
+                oscGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+
+                osc.connect(oscGain);
+                oscGain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch (e) {
+                // Audio not supported — fail silently
+            }
+        }
+
+        // ── Confetti ──
+        function launchConfetti() {
+            const colors = ['#ff6b6b', '#ee5a24', '#ff9ff3', '#f368e0', '#ffd32a',
+                            '#ff4757', '#e84393', '#fd79a8', '#fab1a0', '#ff6348'];
+            for (let i = 0; i < 100; i++) {
+                const el = document.createElement('div');
+                el.classList.add('confetti');
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                el.style.width = (Math.random() * 8 + 5) + 'px';
+                el.style.height = (Math.random() * 8 + 5) + 'px';
+                el.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                el.style.animationDelay = (Math.random() * 0.8) + 's';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 4000);
+            }
+        }
+    </script>
+</body>
+</html>
